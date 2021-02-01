@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
     log_data = log(filename='temp/scraper.log')
-    data = aht(log_data, tag='li',style='small')
+    data = aht(log_data, tag='li',style='list-group-item')
     #breakpoint()
 
     return render_template('index.html', data=data)

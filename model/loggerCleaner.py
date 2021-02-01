@@ -16,7 +16,7 @@ def load_log_from_file(filename) -> Generator:
 def add_html_tolog(generator, tag=str, style=str) -> str: 
 
     """
-    
+
     generator -- generator object to get data from
 
     tag -- html tag to be used
@@ -32,13 +32,16 @@ def add_html_tolog(generator, tag=str, style=str) -> str:
         log_dates = re.findall(r'(\d+-\d+-\d+ \d+:\d+:\d+,\d+)',i)
         log_data = re.findall(r'([A-z]+)',i)
         _list_x.append(f"""
-                            <{tag} class="{style}"><b>{log_dates[0]}</b> {' '.join(log_data)}</{tag}>
+                            <{tag} class="{"list-group-item list-group-item-danger" if log_data[0]=="ERROR" else style}">
+                                <b>{log_dates[0]} </b>{"<span style='color:red;'>"+log_data[0]+"</span>" 
+                                                        if log_data[0]=="ERROR" else log_data[0]} {' '.join(log_data[1:])}
+                            </{tag}>
                             """)
         data = ''.join(_list_x)
     return data                    
 
 def main():
-    print("use: " + load_log_from_file.__name__)
+    print("use: " + load_log_from_file.__doc__)
 
 
 if __name__=="__main__":
