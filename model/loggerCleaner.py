@@ -25,6 +25,22 @@ def add_html_tolog(generator, tag=str, style=str) -> str:
 
     """
 
+    def check_error_level(error) -> str:
+        if(error=="ERROR"):
+            return """list-group-item list-group-item-danger""","""
+                     <span style='color:red;'><b>ERROR</b></span> 
+                    """
+        elif(error=="INFO"):
+            return  """list-group-item""","""
+                     <span style='color:black;'><b>INFO</b></span> 
+                    """
+        elif(error=="WARNING"):
+            return """list-group-item list-group-item-warning""","""
+                     <span style='color:black;'><b>WARNING</b></span> 
+                    """
+        else:
+            raise ValueError("No right param")
+
     _list_x = []
     data = str
     for i in generator:
@@ -32,9 +48,8 @@ def add_html_tolog(generator, tag=str, style=str) -> str:
         log_dates = re.findall(r'(\d+-\d+-\d+ \d+:\d+:\d+,\d+)',i)
         log_data = re.findall(r'([A-z]+)',i)
         _list_x.append(f"""
-                            <{tag} class="{"list-group-item list-group-item-danger" if log_data[0]=="ERROR" else style}">
-                                <b>{log_dates[0]} </b>{"<span style='color:red;'>"+log_data[0]+"</span>" 
-                                                        if log_data[0]=="ERROR" else log_data[0]} {' '.join(log_data[1:])}
+                            <{tag} class="{check_error_level(log_data[0])[0]}">
+                                <b>{log_dates[0]} </b>{check_error_level(log_data[0])[1]} {' '.join(log_data[1:])}
                             </{tag}>
                             """)
         data = ''.join(_list_x)
