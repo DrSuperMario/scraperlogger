@@ -1,5 +1,12 @@
 from typing import Generator
 import re
+#
+#
+# ADD PYTHON DATETUTIL TO SCRAPER THE DATES OF LOGSSSS
+#
+#
+#
+from dateutil.parser import parser
 
 
 
