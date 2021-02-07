@@ -18,7 +18,7 @@ def load_log_from_file(filename) -> Generator:
                 yield i.strip("\n")
 
     except OSError:
-        print("File not found")   
+        raise FileNotFoundError("File not Found")
 
 def add_html_tolog(generator, tag=str, style=str) -> str: 
 
