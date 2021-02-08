@@ -1,16 +1,15 @@
 from werkzeug.security import generate_password_hash
+import argparse
 
 from db import db
 from app import app
 
 from model.admin import Admin
 
-def make_admin():
+def make_admin(username, password):
 
     __tablename__='user'
 
-    username = "admin"
-    password = "admin"
     password_gen = generate_password_hash(password, method='sha256')
     
     with app.app_context():
@@ -20,4 +19,12 @@ def make_admin():
         db.session.close()
 
 if __name__=="__main__":
-    make_admin()
+    arguments = argparse.ArgumentParser(description="Hash Admin passwd")
+    arguments.add_argument('--username', help='Add username to DB')
+    arguments.add_argument('--password', help='Add password to DB')
+    args = arguments.parse_args()
+    if((not args.username) or (not args.password)):
+        print("Aruments --username and --password must be added")
+    else:    
+        make_admin(args.username, args.password)
+        print("User added to db")

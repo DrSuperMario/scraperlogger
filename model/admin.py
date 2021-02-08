@@ -1,6 +1,7 @@
 from db import db
+from flask_login import UserMixin
 
-class Admin(db.Model):
+class Admin(UserMixin, db.Model):
 
     __tablename__='user'
     

@@ -1,26 +1,27 @@
 from typing import Generator
 import re
-#
-#
-# ADD PYTHON DATETUTIL TO SCRAPER THE DATES OF LOGSSSS
-#
-#
-#
-from dateutil.parser import parser
+import os
 
 
 
 def load_log_from_file(filename) -> Generator:
 
     try:
+        file = "../SIGNAL-Scraper/log/scraper.log"
+        if(os.path.exists(file)):
+            filename = file
+            
         with open(filename) as f:
             for i in f.readlines():
-                yield i.strip("\n")
+                i = i.strip("\n")
+                log_dates = re.findall(r'[(\d+\-|:)]+',i)
+                log_data = re.findall(r'([A-z]+)',i)
+                yield log_dates+log_data
 
     except OSError:
         raise FileNotFoundError("File not Found")
 
-def add_html_tolog(generator, tag=str, style=str) -> str: 
+def add_html_tolog(generator, tag=str, style=str, newest_first=False) -> str: 
 
     """
 
@@ -48,15 +49,19 @@ def add_html_tolog(generator, tag=str, style=str) -> str:
         else:
             raise ValueError("No right param")
 
-    _list_x = []
-    data = str
+    _list_x = list()
+    data = str()
+
+    if(newest_first):
+        generator = sorted(generator, key=lambda x: x[0], reverse=True)
+    else:
+        generator = sorted(generator, key=lambda x: x[0], reverse=False)
+
     for i in generator:
         #Here add html 
-        log_dates = re.findall(r'(\d+-\d+-\d+ \d+:\d+:\d+,\d+)',i)
-        log_data = re.findall(r'([A-z]+)',i)
         _list_x.append(f"""
-                            <{tag} class="{check_error_level(log_data[0])[0]}">
-                                <b>{log_dates[0]} </b>{check_error_level(log_data[0])[1]} {' '.join(log_data[1:])}
+                            <{tag} class="{check_error_level(i[3])[0]}">
+                                <b>{' '.join(i[:2])} </b>{check_error_level(i[3])[1]} {' '.join(i[3:])}
                             </{tag}>
                             """)
         data = ''.join(_list_x)
