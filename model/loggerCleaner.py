@@ -53,10 +53,10 @@ def add_html_tolog(generator, tag=str, style=str, newest_first=False) -> str:
     data = str()
 
     if(newest_first):
-        generator = sorted(generator, key=lambda x: x[0], reverse=True)
+        generator = sorted(generator, key=lambda x: ' '.join(x[0]+x[1]), reverse=True)
     else:
-        generator = sorted(generator, key=lambda x: x[0], reverse=False)
-
+        generator = sorted(generator, key=lambda x: ' '.join(x[0]+x[1]), reverse=False)
+        
     for i in generator:
         #Here add html 
         if(i[3]=="-"):
