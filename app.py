@@ -68,17 +68,16 @@ def login():
 @login_required
 def home():
     form = LoggerForm()
-    log_data = log(filename='temp/scraper.log')
-    data = aht(log_data, tag='li',style='list-group-item')
+    data = aht(log(), tag='li',style='list-group-item')
 
     if((request.method == 'POST') and (form.newest_button.data)):
-        data = aht(log(filename='temp/scraper.log'), tag='li',style='list-group-item', newest_first=True)
+        data = aht(log(), tag='li',style='list-group-item', newest_first=True)
         return render_template('home.html',form=form, data=data)
 
     elif((request.method == 'POST') and (form.oldest_button.data)):
         return render_template('home.html',
                                 form=form, 
-                                data=aht(log(filename='temp/scraper.log'), 
+                                data=aht(log(), 
                                         tag='li',style='list-group-item')
                             )
 

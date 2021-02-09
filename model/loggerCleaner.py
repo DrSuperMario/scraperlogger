@@ -4,10 +4,10 @@ import os
 
 
 
-def load_log_from_file(filename) -> Generator:
+def load_log_from_file(filename='temp/scraper.log') -> Generator:
 
     try:
-        file = "../SIGNAL-Scraper/log/scraper.log"
+        file = "~/python/projects/SIGNAL-Scraper/log/scraper.log"
         if(os.path.exists(file)):
             filename = file
             
@@ -61,7 +61,7 @@ def add_html_tolog(generator, tag=str, style=str, newest_first=False) -> str:
         #Here add html 
         _list_x.append(f"""
                             <{tag} class="{check_error_level(i[3])[0]}">
-                                <b>{' '.join(i[:2])} </b>{check_error_level(i[3])[1]} {' '.join(i[3:])}
+                                <b>{' '.join(i[:2])} </b>{check_error_level(i[3])[1]} {' '.join(i[4:])}
                             </{tag}>
                             """)
         data = ''.join(_list_x)
