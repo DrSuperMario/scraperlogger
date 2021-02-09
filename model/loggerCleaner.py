@@ -1,15 +1,16 @@
 from typing import Generator
 import re
-import os
+from pathlib import Path
 
 
 
 def load_log_from_file(filename='temp/scraper.log') -> Generator:
 
     try:
-        file = "~/python/projects/SIGNAL-Scraper/log/scraper.log"
-        if(os.path.exists(file)):
-            filename = file
+        file = Path("/home/drmario/python/projects/SIGNAL-Scraper/log/")
+        if(file.exists()):
+            filename = file + "scraper.log"
+       
             
         with open(filename) as f:
             for i in f.readlines():
