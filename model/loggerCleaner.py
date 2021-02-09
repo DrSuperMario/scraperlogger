@@ -7,9 +7,9 @@ from pathlib import Path
 def load_log_from_file(filename='temp/scraper.log') -> Generator:
 
     try:
-        file = Path("/home/drmario/python/projects/SIGNAL-Scraper/log/")
+        file = Path("/home/drmario/python/projects/SIGNAL-Scraper/log/scraper.log")
         if(file.exists()):
-            filename = file + "scraper.log"
+            filename = file
        
             
         with open(filename) as f:
@@ -47,8 +47,7 @@ def add_html_tolog(generator, tag=str, style=str, newest_first=False) -> str:
             return """list-group-item list-group-item-warning""","""
                      <span style='color:black;'><b>WARNING</b></span> 
                     """
-        else:
-            raise ValueError("No right param")
+ 
 
     _list_x = list()
     data = str()
@@ -60,6 +59,8 @@ def add_html_tolog(generator, tag=str, style=str, newest_first=False) -> str:
 
     for i in generator:
         #Here add html 
+        if(i[3]=="-"):
+            breakpoint()
         _list_x.append(f"""
                             <{tag} class="{check_error_level(i[3])[0]}">
                                 <b>{' '.join(i[:2])} </b>{check_error_level(i[3])[1]} {' '.join(i[4:])}
