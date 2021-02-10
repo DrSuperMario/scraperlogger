@@ -13,6 +13,10 @@ from util.search_log import search_log_files
 class LoadLog():
 
     filename: Path
+    re_dates: re
+    re_text: re
+    re_special: re
+    
 
     def __init__(self):
 
