@@ -20,7 +20,7 @@
 2021-02-01 21:54:04,874 INFO Forex collected
 2021-02-01 21:59:05,926 ERROR Assertion error from coinlist Assertion failed.
 2021-02-01 21:59:18,761 INFO Crypto collected
-2021-02-01 22:07:54,127 INFO News collected
+2021-02-01 22:07:54,127 INFO N-ews collected
 2021-02-01 22:16:27,008 INFO Stock collected
 2021-02-01 22:24:52,023 INFO Forex collected
 2021-02-01 22:29:53,032 ERROR Assertion error from coinlist Assertion failed.

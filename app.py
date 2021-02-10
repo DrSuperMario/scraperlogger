@@ -18,8 +18,7 @@ from flask_login.utils import login_required
 from flask_wtf.form import _is_submitted
 from werkzeug.security import check_password_hash
 
-from model.loggerCleaner import load_log_from_file as log
-from model.loggerCleaner import add_html_tolog as aht
+from model.loggerCleaner import LoadLog
 from model.forms import LoginForm, LoggerForm
 from model.admin import Admin
 
@@ -36,6 +35,8 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 db.init_app(app)
 login_manager.init_app(app)
+
+load_log = LoadLog()
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -68,17 +69,31 @@ def login():
 @login_required
 def home():
     form = LoggerForm()
-    data = aht(log(), tag='li',style='list-group-item')
+    data = load_log.add_html_tolog(
+                                        tag='li',
+                                        style='list-group-item', 
+                                        oldest_first=False
+                                    )
 
     if((request.method == 'POST') and (form.newest_button.data)):
-        data = aht(log(), tag='li',style='list-group-item', newest_first=True)
+        data = load_log.add_html_tolog( 
+                                        tag='li',
+                                        style='list-group-item', 
+                                        oldest_first=False
+                                    )
         return render_template('home.html',form=form, data=data)
 
     elif((request.method == 'POST') and (form.oldest_button.data)):
+
+        data = load_log.add_html_tolog(
+                                        tag='li',
+                                        style='list-group-item', 
+                                        oldest_first=True
+                                    )
+
         return render_template('home.html',
                                 form=form, 
-                                data=aht(log(), 
-                                        tag='li',style='list-group-item')
+                                data=data
                             )
 
     return render_template('home.html',form=form, data=data) 
